@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    "outDir": "dist/temp", // Prevent error with .js file.
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": ["./*.ts", "./*.js", "./*.cjs", "scripts/*.ts"],
+  "exclude": ["eslint.config.js"]
+}

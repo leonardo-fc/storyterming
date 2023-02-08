@@ -1,0 +1,20 @@
+{
+  "enableGlobDot": true,
+  "files": [
+    "**",
+    "!.git",
+    "!.gitignore",
+    "!.github",
+    "!.devcontainer",
+    "!Cargo.lock",
+    "!ui",
+    "!target"
+  ],
+  "words": [
+    "devcontainer",
+    "devcontainers",
+    "formatcp",
+    "openpty",
+    "storyterming"
+  ]
+}

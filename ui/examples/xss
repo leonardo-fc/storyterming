@@ -1,0 +1,2 @@
+<script>alert('XSS Command')</script>
+<script>alert('XSS Output')</script>
