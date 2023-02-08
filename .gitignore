@@ -1,0 +1,18 @@
+# Lib tests output
+/temp
+
+# Rust
+/target
+
+# Node.js
+.pnpm-store
+
+# Editor directories and files
+.vscode
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

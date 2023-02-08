@@ -1,0 +1,112 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+env:
+  # Disable incremental build, speeds up CI
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  validate-core:
+    name: Validate core (Rust)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          components: rustfmt, clippy
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: cargo-deps-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v3
+        with:
+          path: target
+          key: cargo-build-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+
+      # Buggy, it don't follow the config
+      # - name: Spell check
+      #   uses: streetsidesoftware/cspell-action@v2
+
+      - name: Format check
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: -- --check
+
+      - name: Build check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --all-features
+
+      - name: Clippy check
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: --all-features -- -W clippy::pedantic -W clippy::nursery
+
+      - name: Tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all-features
+
+  validate-dashboard:
+    name: Validate dashboard (JS)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dashboard
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.26.0
+          run_install: |
+            - cwd: dashboard
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.16.0
+          cache: "pnpm"
+          cache-dependency-path: dashboard/pnpm-lock.yaml
+          registry-url: https://registry.npmjs.org/
+
+      - run: corepack enable
+
+      - name: Install NPM dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Buggy, it don't follow the config
+      # - name: Spell check
+      #   uses: streetsidesoftware/cspell-action@v2
+      #   with:
+      #     root: dashboard
+
+      - name: Spell check
+        run: pnpx cspell && pnpx cspell --root ..
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Lint check
+        run: pnpm lint

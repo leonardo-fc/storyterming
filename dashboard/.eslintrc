@@ -1,0 +1,50 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.node.json",
+    "tsconfigRootDir": ".",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:svelte/recommended"
+  ],
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "ignorePatterns": ["dist", "*.css"],
+  "overrides": [
+    {
+      "files": ["./*.{ts,js,cjs}", "scripts/*.ts"],
+      "parserOptions": {
+        "project": "tsconfig.config.json",
+        "tsconfigRootDir": ".",
+        "sourceType": "module"
+      }
+    },
+    {
+      "files": ["./src/client/**/*.{ts,svelte}"],
+      "parserOptions": {
+        "project": "tsconfig.json",
+        "tsconfigRootDir": ".",
+        "sourceType": "module"
+      },
+      "env": { "browser": true }
+    },
+    {
+      "files": ["*.svelte"],
+      "parser": "svelte-eslint-parser",
+      "parserOptions": {
+        "extraFileExtensions": [".svelte"],
+        "parser": "@typescript-eslint/parser"
+      },
+      "rules": {
+        "no-self-assign": "off",
+        "svelte/valid-compile": "off"
+      }
+    }
+  ]
+}

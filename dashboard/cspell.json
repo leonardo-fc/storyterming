@@ -1,0 +1,23 @@
+{
+  "enableGlobDot": true,
+  "files": [
+    "**",
+    "!.gitignore",
+    "!node_modules",
+    "!dist",
+    "!pnpm-lock.yaml"
+  ],
+  "words": [
+    "ansi",
+    "Avenir",
+    "bufferutil",
+    "daisyui",
+    "devcontainer",
+    "devcontainers",
+    "finalhandler",
+    "histoire",
+    "storyterming",
+    "tailwindcss",
+    "trpc"
+  ]
+}

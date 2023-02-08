@@ -1,0 +1,49 @@
+{
+  "name": "Storyterming",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "/bin/sh -c \"cd dashboard && corepack prepare && pnpm install\"",
+  "forwardPorts": [3000, 5173],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "streetsidesoftware.code-spell-checker",
+        "svelte.svelte-vscode",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "editor.tabSize": 2,
+        "[rust]": {
+          "editor.tabSize": 4,
+          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        },
+        "[toml]": {
+          "editor.defaultFormatter": "tamasfe.even-better-toml"
+        },
+        "rust-analyzer.checkOnSave.command": "clippy",
+        "rust-analyzer.checkOnSave.extraArgs": [
+          "--",
+          "-W",
+          "clippy::pedantic",
+          "-W",
+          "clippy::nursery"
+        ],
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[svelte]": {
+          "editor.defaultFormatter": "svelte.svelte-vscode"
+        },
+        "svelte.enable-ts-plugin": true,
+        "eslint.validate": ["javascript", "typescript", "svelte"],
+        "files.associations": {
+          "*.css": "tailwindcss"
+        }
+      }
+    }
+  }
+}
